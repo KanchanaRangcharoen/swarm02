@@ -6,7 +6,7 @@
 - https://kan-react-nginx.xops.ipv9.me/
 
 ## ขั้นตอนการพัฒนา
-## push images เข้า docker hub
+**push images เข้า docker hub**
 ```
 1. $ docker compose up -d --build เพื่อสร้าง images
 2. $ docker ps เพื่อเช็คimages
