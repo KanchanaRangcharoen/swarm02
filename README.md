@@ -11,9 +11,9 @@
 1. Create VM on proxmox
 2. Set Template
     - Set time
-     ```
-    timedatectl set-timezone Asia/Bangkok
-    ```
+        ```
+        timedatectl set-timezone Asia/Bangkok
+        ```
     - [Install docker](https://docs.docker.com/engine/install/ubuntu/)
 3. Create node from Template
     - manage
@@ -61,7 +61,11 @@
     - Edit file hosts
         - windows C:\Windows\System32\drivers\etc\hosts
         - Linux /etc/hosts
-     - [Step Revert Proxy by pitimon](https://github.com/pitimon/dockerswarm-inhoure/tree/main/ep03-traefik)
+    - Add domain IP of manager for every application
+        ```
+        [ip manage] traefik.demo.local
+        ```
+    - [Step Revert Proxy by pitimon](https://github.com/pitimon/dockerswarm-inhoure/tree/main/ep03-traefik)
 ### Create Image
 Bring selected apps push images 
 - Compose up file compose.yaml to create images 
