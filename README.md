@@ -51,9 +51,8 @@
 
 7. [Revert Proxy on Manager](#revert-proxy-on-manager)
 8. [Create Image](#create-image)
-9. Create docker-compose.yml
-10. Copy code on docker-compose.yml
-11. Deploy on Portainer
+9. [Create docker-compose.yml](#create-docker-composeyml)
+10. Bring docker-compose.yml Stack Deploy on the machine
 
 ### Revert Proxy on Manager
 - Set IP for Client
@@ -88,4 +87,41 @@ Bring selected apps push images
     ```
     **Ex.** docker push kanchanarangcharoen/react-nginx:2904
 
+### Create docker-compose.yml
+<details><summary><ins>SHOW CODE docker-compose.yml</ins></summary>
+<p>
 
+
+```
+version: '3.3'
+services:
+  web:
+    image: kanchanarangcharoen/react-nginx:2904
+    networks:
+     - webproxy
+    logging:
+      driver: json-file
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.docker.network=webproxy
+        - traefik.enable=true
+        - traefik.http.routers.${APPNAME}-https.entrypoints=websecure
+        - traefik.http.routers.${APPNAME}-https.rule=Host("${APPNAME}.xops.ipv9.me")
+        - traefik.http.routers.${APPNAME}-https.tls.certresolver=default
+        - traefik.http.services.${APPNAME}.loadbalancer.server.port=80
+      resources:
+        reservations:
+          cpus: '0.1'
+          memory: 10M
+        limits:
+          cpus: '0.4'
+          memory: 50M
+networks:
+  webproxy:
+    external: true
+volumes:
+  app:
+```
